@@ -7,6 +7,8 @@
 
 > Unopinionated, pluggable React 19 components and substrate cache hooks for Hyle datasets.
 
+📖 **Full Documentation & Source**: See the main [**libhyle-react GitHub README**](https://github.com/tty-pt/libhyle-react#readme).
+
 ---
 
 ## 1. Installation
@@ -107,4 +109,4 @@ Table state management hook for canonical query serialization and sort state tog
 
 ## License
 
-BSD-2-Clause License. Copyright (c) 2026, Paulo Quirino.
+BSD-2-Clause — Copyright (c) 2026, Paulo Quirino <quirinpa@gmail.com>. See [LICENSE](https://github.com/tty-pt/libhyle-react/blob/main/LICENSE).
