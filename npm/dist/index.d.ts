@@ -15,6 +15,8 @@ export interface HyleTableProps<T = any> {
   columnOverrides?: Record<string, Partial<HyleColumn<T>>>;
   items: T[];
   keyField?: string;
+  page?: number;
+  perPage?: number;
   sort?: string;
   sortOrder?: "asc" | "desc";
   onSort?: (field: string, order: "asc" | "desc") => void;

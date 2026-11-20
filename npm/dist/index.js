@@ -25,6 +25,8 @@ export function HyleTable({
   columnOverrides = {},
   items = [],
   keyField = "id",
+  page,
+  perPage,
   sort = "",
   sortOrder = "asc",
   onSort,
@@ -91,6 +93,22 @@ export function HyleTable({
     });
   }
 
+  // Paginate sorted items when page and perPage are provided on an unsliced dataset
+  let displayItems = sortedItems;
+  if (
+    sortedItems &&
+    sortedItems.length > 0 &&
+    typeof page === "number" &&
+    typeof perPage === "number" &&
+    perPage > 0 &&
+    sortedItems.length > perPage
+  ) {
+    const totalPages = Math.max(1, Math.ceil(sortedItems.length / perPage));
+    const clampedPage = Math.min(Math.max(1, page), totalPages);
+    const startIdx = (clampedPage - 1) * perPage;
+    displayItems = sortedItems.slice(startIdx, startIdx + perPage);
+  }
+
   // Header cells
   const headerCells = resolvedColumns.map((col, idx) => {
     const isSortable = col.sortable !== false;
@@ -155,7 +173,7 @@ export function HyleTable({
 
   // Body rows
   let bodyContent;
-  if (!sortedItems || sortedItems.length === 0) {
+  if (!displayItems || displayItems.length === 0) {
     bodyContent = [
       e(
         "tr",
@@ -172,7 +190,7 @@ export function HyleTable({
       ),
     ];
   } else {
-    bodyContent = sortedItems.map((item, rowIdx) => {
+    bodyContent = displayItems.map((item, rowIdx) => {
       const rowKey = (item && item[keyField]) ? item[keyField] : rowIdx;
       const resolvedRowClass =
         typeof rowClassName === "function" ? rowClassName(item, rowIdx) : rowClassName;

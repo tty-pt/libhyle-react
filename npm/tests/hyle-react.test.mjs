@@ -132,6 +132,12 @@ test("HyleTable updates and reorders rows dynamically when sort changes", () => 
   const [, numBody] = numTable.props.children.props.children;
   const numScores = numBody.props.children.map(row => Number(row.props.children[1].props.children));
   assert.deepEqual(numScores, [95, 90, 85], "Table must sort rows numerically descending by score");
+
+  // 4. Sort + pagination: sorts full dataset before slicing page
+  const page2Table = HyleTable({ columns, items, sort: "name:asc", page: 2, perPage: 2 });
+  const [, page2Body] = page2Table.props.children.props.children;
+  const page2Names = page2Body.props.children.map(row => row.props.children[0].props.children);
+  assert.deepEqual(page2Names, ["Charlie"], "Page 2 of sorted items must contain Charlie");
 });
 
 test("HyleTable auto-derives columns from Hyle schema with columnOverrides", () => {
